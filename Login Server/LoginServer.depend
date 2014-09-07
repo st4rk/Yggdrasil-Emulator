@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1409847419 source:c:\users\lucas\desktop\yggdrasil emulator\login server\main.c
+	"socket.h"
+	<stdio.h>
+	<stdlib.h>
+
+1410110139 c:\users\lucas\desktop\yggdrasil emulator\login server\yggdrasil.h
+
+1410119100 source:c:\users\lucas\desktop\yggdrasil emulator\login server\packet.c
+	"packet.h"
+	"sqlite.h"
+
+1410118217 c:\users\lucas\desktop\yggdrasil emulator\login server\packet.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"yggdrasil.h"
+
+1410100847 source:c:\users\lucas\desktop\yggdrasil emulator\login server\socket.c
+	"socket.h"
+	"packet.h"
+
+1410050197 c:\users\lucas\desktop\yggdrasil emulator\login server\socket.h
+	<winsock2.h>
+	<stdio.h>
+	<stdlib.h>
+
+1409795250 source:c:\users\lucas\desktop\yggdrasil emulator\login server\yggdrasil.c
+	"yggdrasil.h"
+
+1410048137 c:\users\lucas\desktop\yggdrasil emulator\login server\mysql.h
+	<stdio.h>
+	<stdlib.h>
+	"yggdrasil.h"
+
+1410111106 c:\users\lucas\desktop\yggdrasil emulator\login server\sqlite.h
+	<stdio.h>
+	<stdlib.h>
+	<sqlite3.h>
+	"yggdrasil.h"
+
+1409592102 c:\users\lucas\desktop\yggdrasil emulator\login server\sqlite\sqlite3.h
+	<stdarg.h>
+
+1409592102 c:\users\lucas\desktop\yggdrasil emulator\login server\sqlite3.h
+	<stdarg.h>
+
