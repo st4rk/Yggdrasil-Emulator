@@ -1,3 +1,13 @@
+/*****************************************************************************
+**  Esse arquivo é parte do YggdrasilEMU                                    **
+**  YggdrasilEMU é um emulador de Digimon Masters Online, ele é open-source **
+**  dessa forma você pode utilizar esses arquivos para estudo ou para base  **
+**  em outros projetos de emuladores de servidores ou até mesmo do DMO      **
+**  Desenvolvido por St4rk                                                  **
+******************************************************************************/
+
+#ifndef PACKET_H
+#define PACKET_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,9 +34,9 @@ typedef enum PACKET_HEADER {
 void sendAuth();
 void sendConfirm();
 void sendMensagem(char *name, int size);
-void sendChannels();
+void sendChannels(int nIndex);
 void sendSelectedChannel();
-void handlePacket(u8 *packet);
+void handlePacket(int nIndex, u8 *packet);
 
 
 void startSQLite();
@@ -46,3 +56,5 @@ void addCount(int i);
 void clearPacket();
 
 int getCount();
+
+#endif // PACKET_H

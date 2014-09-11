@@ -1,3 +1,11 @@
+/*****************************************************************************
+**  Esse arquivo é parte do YggdrasilEMU                                    **
+**  YggdrasilEMU é um emulador de Digimon Masters Online, ele é open-source **
+**  dessa forma você pode utilizar esses arquivos para estudo ou para base  **
+**  em outros projetos de emuladores de servidores ou até mesmo do DMO      **
+**  Desenvolvido por St4rk                                                  **
+******************************************************************************/
+
 #include "packet.h"
 #include "sqlite.h"
 
@@ -76,17 +84,17 @@ void sendConfirm() {
 /* Mensagem to Client */
 void sendMensagem(char *name, int size) {
 	clearPacket();
-	writeHeader(SEND_MENSAGEM_PACKET); // 4
+	writeHeader(SEND_MENSAGEM_PACKET);
 	writeInt(0x0);
-	writeString(name, size); // 8 + size
-	writeString("NULL", 4); // 13 + size
-	writeShort((packet_count + 2) ^ checkSum); // 16 + size
+	writeString(name, size);
+	writeString("NULL", 4);
+	writeShort((packet_count + 2) ^ checkSum);
 	writeSize(packet_count);
 }
 
-void sendChannels() {
+void sendChannels(int nIndex) {
     u8 t_channel = SQLITE_getChannels();
-    u16 packetSize = 18 + strlen(nChannel[0].name) + strlen(nAccount[0].name);
+    u16 packetSize = 18 + strlen(nChannel[nIndex].name) + strlen(nAccount[nIndex].name);
 
     clearPacket();
 
@@ -114,18 +122,18 @@ void sendSelectedChannel() {
     writeShort(0x1D ^ checkSum);
 }
 
-void verifyAccounts(u8 *packet) {
-    nAccount[0].nLen = packet[12];
-    memcpy(nAccount[0].name, packet + 13, nAccount[0].nLen);
-    nAccount[0].sLen = packet[nAccount[0].nLen + 12];
-    memcpy(nAccount[0].senha, packet + (packet[12] + 15), nAccount[0].sLen);
+void verifyAccounts(int nIndex, u8 *packet) {
+    nAccount[nIndex].nLen = packet[12];
+    memcpy(nAccount[nIndex].name, packet + 13, nAccount[nIndex].nLen);
+    nAccount[nIndex].sLen = packet[nAccount[nIndex].nLen + 12];
+    memcpy(nAccount[nIndex].senha, packet + (packet[12] + 15), nAccount[nIndex].sLen);
 
     #ifdef DEBUG
-    printf("%s\n", nAccount[0].name);
-    printf("%s\n", nAccount[0].senha);
+    printf("%s\n", nAccount[nIndex].name);
+    printf("%s\n", nAccount[nIndex].senha);
     #endif // DEBUG
 
-    int res = SQLITE_verifyAccountDB(&nAccount[0]);
+    int res = SQLITE_verifyAccountDB(&nAccount[nIndex]);
 
     switch(res) {
         case 0:
@@ -133,8 +141,7 @@ void verifyAccounts(u8 *packet) {
             break;
 
         case 1:
-            printf("Aqui \n");
-            sendChannels();
+            sendChannels(nIndex);
             break;
 
         case(-1):
@@ -150,7 +157,7 @@ void verifyAccounts(u8 *packet) {
 
 }
 
-void handlePacket(u8 *packet) {
+void handlePacket(int nIndex, u8 *packet) {
 	/* Decode Packet Header */
 
 	u16 HEADER = packet[2] << 8 | packet[3];
@@ -168,11 +175,11 @@ void handlePacket(u8 *packet) {
 
 		case(RECV_ACCOUNT_PACKET):
             printf("Conta Recebida !\n");
-            verifyAccounts(packet);
+            verifyAccounts(nIndex, packet);
 		break;
 
 		case(RECV_REFRESH_PACKET):
-            sendChannels();
+            sendChannels(nIndex);
         break;
 
 		default:

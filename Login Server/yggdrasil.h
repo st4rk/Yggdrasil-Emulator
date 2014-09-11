@@ -1,3 +1,11 @@
+/*****************************************************************************
+**  Esse arquivo é parte do YggdrasilEMU                                    **
+**  YggdrasilEMU é um emulador de Digimon Masters Online, ele é open-source **
+**  dessa forma você pode utilizar esses arquivos para estudo ou para base  **
+**  em outros projetos de emuladores de servidores ou até mesmo do DMO      **
+**  Desenvolvido por St4rk                                                  **
+******************************************************************************/
+
 #ifndef YGGDRASIL_H
 #define YGGDRASIL_H
 
