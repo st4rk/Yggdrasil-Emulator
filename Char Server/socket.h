@@ -6,19 +6,24 @@
 **  Desenvolvido por St4rk                                                  **
 ******************************************************************************/
 
-#include "socket.h"
+#ifndef SOCKET_H
+#define SOCKET_H
+
+#include <winsock2.h>
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-char* SERVER_IP = "127.0.0.1";
-int SERVER_PORTA = 7029;
 
-int main( void ) {
-	printf("Yggdrasil Emulator - Login Server\n");
-	printf("Written by St4rk - Rev 1.02\n");
-    startSocket();
-    startHost(SERVER_IP, SERVER_PORTA);
-    startHandle();
-    killSocket();
-	return 0;
-}
+
+WSADATA wsaData;
+SOCKET playerSocket;
+struct sockaddr_in Address;
+
+DWORD WINAPI thread_socket(LPVOID param);
+void startSocket();
+void startHost(char *IP, int porta);
+void startHandle();
+void killSocket();
+
+#endif

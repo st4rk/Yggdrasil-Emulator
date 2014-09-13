@@ -45,11 +45,11 @@
 1409592102 c:\users\lucas\desktop\yggdrasil emulator\login server\sqlite3.h
 	<stdarg.h>
 
-1410580193 source:c:\users\lucas\documents\github\yggdrasil-emulator\login server\packet.c
+1410393657 source:c:\users\lucas\documents\github\yggdrasil-emulator\login server\packet.c
 	"packet.h"
 	"sqlite.h"
 
-1410580134 c:\users\lucas\documents\github\yggdrasil-emulator\login server\packet.h
+1410393570 c:\users\lucas\documents\github\yggdrasil-emulator\login server\packet.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -57,7 +57,7 @@
 
 1410579289 c:\users\lucas\documents\github\yggdrasil-emulator\login server\yggdrasil.h
 
-1410579446 c:\users\lucas\documents\github\yggdrasil-emulator\login server\sqlite.h
+1410393268 c:\users\lucas\documents\github\yggdrasil-emulator\login server\sqlite.h
 	<stdio.h>
 	<stdlib.h>
 	<sqlite3.h>
@@ -77,4 +77,37 @@
 1410393859 source:c:\users\lucas\documents\github\yggdrasil-emulator\login server\socket.c
 	"socket.h"
 	"packet.h"
+
+1410393859 source:c:\users\lucas\documents\github\yggdrasil-emulator\char server\socket.c
+	"socket.h"
+	"packet.h"
+
+1410393283 c:\users\lucas\documents\github\yggdrasil-emulator\char server\socket.h
+	<winsock2.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+
+1410580715 c:\users\lucas\documents\github\yggdrasil-emulator\char server\packet.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"yggdrasil.h"
+
+1410579289 c:\users\lucas\documents\github\yggdrasil-emulator\char server\yggdrasil.h
+
+1410580281 source:c:\users\lucas\documents\github\yggdrasil-emulator\char server\main.c
+	"socket.h"
+	<stdio.h>
+	<stdlib.h>
+
+1410580706 source:c:\users\lucas\documents\github\yggdrasil-emulator\char server\packet.c
+	"packet.h"
+	"sqlite.h"
+
+1410579446 c:\users\lucas\documents\github\yggdrasil-emulator\char server\sqlite.h
+	<stdio.h>
+	<stdlib.h>
+	<sqlite3.h>
+	"yggdrasil.h"
 

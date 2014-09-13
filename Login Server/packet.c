@@ -94,20 +94,31 @@ void sendMensagem(char *name, int size) {
 
 void sendChannels(int nIndex) {
     u8 t_channel = SQLITE_getChannels();
-    u16 packetSize = 18 + strlen(nChannel[nIndex].name) + strlen(nAccount[nIndex].name);
+    int i;
 
     clearPacket();
 
     writeHeader(SEND_CHANNEL_PACKET);
-    writeSize(packetSize);
-    writeByte(0x01);
-    writeInt(nChannel[0].ID);
-    writeString(nChannel[0].name, strlen(nChannel[0].name));
-    writeShort(0x0);
-    /* Here is the total players on server, i will implement it later :3 */
-    writeByte(0x0);
+    writeByte(t_channel);
+
+    for(i = 0; i < t_channel; i++) {
+        writeInt(nChannel[i].ID);
+        writeString(nChannel[i].name, strlen(nChannel[i].name));
+        writeShort(0x0);
+
+        if(nChannel[i].players > 10)
+            writeByte(0x1);
+        else if(nChannel[i].players > 50)
+            writeByte(0x2);
+        else if(nChannel[i].players > 90)
+            writeByte(0x3);
+        else
+            writeByte(0x0);
+    }
+
     writeString(nAccount[0].name, strlen(nAccount[0].name));
-    writeShort(packetSize ^ checkSum); // 2
+    writeShort(getCount() + 2 ^ checkSum);
+    writeSize(getCount());
 
 }
 
@@ -142,6 +153,10 @@ void verifyAccounts(int nIndex, u8 *packet) {
 
         case 1:
             sendChannels(nIndex);
+            break;
+
+        case 2:
+            sendMensagem("Conta ja esta em uso !", strlen("Conta ja esta em uso !"));
             break;
 
         case(-1):
@@ -180,6 +195,10 @@ void handlePacket(int nIndex, u8 *packet) {
 
 		case(RECV_REFRESH_PACKET):
             sendChannels(nIndex);
+        break;
+
+        case(RECV_SCHANNEL_PACKET):
+            sendSelectedChannel();
         break;
 
 		default:

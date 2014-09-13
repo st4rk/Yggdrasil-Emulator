@@ -20,9 +20,7 @@ typedef enum PACKET_HEADER {
 	RECV_AUTH_PACKET 		= 0x0,
 	RECV_CONFIRM_PACKET 	= 0xFFFF,
 	RECV_ACCOUNT_PACKET 	= 0xE50C,
-	RECV_CHANNEL_PACKET 	= 0xFFFE,
-	RECV_REFRESH_PACKET     = 0xA506,
-	RECV_SCHANNEL_PACKET    = 0xA606,
+    RECV_CHAR_PACKET        = 0xAA06,
 
 	SEND_AUTH_PACKET		= 0xFFFF,
 	SEND_MENSAGEM_PACKET 	= 0xCEA,
@@ -34,9 +32,7 @@ typedef enum PACKET_HEADER {
 
 void sendAuth();
 void sendConfirm();
-void sendMensagem(char *name, int size);
-void sendChannels(int nIndex);
-void sendSelectedChannel();
+void sendChar();
 void handlePacket(int nIndex, u8 *packet);
 
 
