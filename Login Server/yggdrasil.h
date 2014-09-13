@@ -33,8 +33,10 @@ typedef struct CHANNEL_STRUCT {
     u32 ID;
     u8 name[20];
     u32 players;
+    u32 max_players;
     u8 ip[20];
     u32 porta;
+    u32 manu;
 } CHANNEL_STRUCT;
 
 CHANNEL_STRUCT nChannel[MAX_CHANNEL];

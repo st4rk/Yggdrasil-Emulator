@@ -23,8 +23,8 @@ typedef enum PACKET_HEADER {
     RECV_CHAR_PACKET        = 0xAA06,
 
 	SEND_AUTH_PACKET		= 0xFFFF,
-	SEND_MENSAGEM_PACKET 	= 0xCEA,
 	SEND_CONFIRM_PACKET		= 0xFFFE,
+	SEND_CHAR_PACKET        = 0x0515,
 	SEND_INFO_PACKET 		= 0x0385,
 	SEND_CHANNEL_PACKET 	= 0xCE6
 };
@@ -32,7 +32,7 @@ typedef enum PACKET_HEADER {
 
 void sendAuth();
 void sendConfirm();
-void sendChar();
+void sendChar(int nIndex, u8* packet);
 void handlePacket(int nIndex, u8 *packet);
 
 

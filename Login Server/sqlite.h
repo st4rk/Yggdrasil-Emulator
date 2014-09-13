@@ -59,9 +59,10 @@ u8 SQLITE_getChannels() {
             nChannel[nCanais].ID = sqlite3_column_int(stmt, 0);
             strcpy(nChannel[nCanais].name, sqlite3_column_text(stmt, 1));
             nChannel[nCanais].players = sqlite3_column_int(stmt, 2);
-            strcpy(nChannel[nCanais].ip, sqlite3_column_text(stmt, 3));
-            nChannel[nCanais].porta = sqlite3_column_int(stmt, 4);
-
+            nChannel[nCanais].max_players = sqlite3_column_int(stmt, 3);
+            strcpy(nChannel[nCanais].ip, sqlite3_column_text(stmt, 4));
+            nChannel[nCanais].porta = sqlite3_column_int(stmt, 5);
+            nChannel[nCanais].manu = sqlite3_column_int(stmt, 6);
             nCanais++;
         }
     }  while( rc != SQLITE_DONE );

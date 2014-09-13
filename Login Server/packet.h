@@ -36,7 +36,7 @@ void sendAuth();
 void sendConfirm();
 void sendMensagem(char *name, int size);
 void sendChannels(int nIndex);
-void sendSelectedChannel();
+void sendSelectedChannel(int nIndex, u8* Packet);
 void handlePacket(int nIndex, u8 *packet);
 
 

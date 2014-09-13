@@ -15,7 +15,7 @@ int SERVER_PORTA = 6999;
 
 int main( void ) {
 	printf("Yggdrasil Emulator - Char Server\n");
-	printf("Written by St4rk - Rev 0.00\n");
+	printf("Written by St4rk - Rev 0.01\n");
     startSocket();
     startHost(SERVER_IP, SERVER_PORTA);
     startHandle();

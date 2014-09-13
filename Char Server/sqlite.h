@@ -20,8 +20,6 @@ sqlite3 *db;
 sqlite3_stmt *stmt;
 char *errMsg = 0;
 
-extern CHANNEL_STRUCT nChannel[MAX_CHANNEL];
-
 void SQLITE_start() {
     int rc;
     printf("Inicializando SQLite...\n");
@@ -41,37 +39,9 @@ void SQLITE_close() {
     sqlite3_close(db);
 }
 
-u8 SQLITE_getChannels() {
+int SQLITE_getPlayer(PLAYER_STRUCT* A) {
     int rc;
-    int nCanais = 0;
-    char *sql = "SELECT * FROM canais";
-
-    rc = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-
-    if( rc != SQLITE_OK ) {
-        printf("Erro ao acessar canais: %s !\n", sqlite3_errstr(rc));
-    }
-
-    do {
-        rc = sqlite3_step(stmt);
-
-        if ( rc == SQLITE_ROW ) {
-            nChannel[nCanais].ID = sqlite3_column_int(stmt, 0);
-            strcpy(nChannel[nCanais].name, sqlite3_column_text(stmt, 1));
-            nChannel[nCanais].players = sqlite3_column_int(stmt, 2);
-            strcpy(nChannel[nCanais].ip, sqlite3_column_text(stmt, 3));
-            nChannel[nCanais].porta = sqlite3_column_int(stmt, 4);
-
-            nCanais++;
-        }
-    }  while( rc != SQLITE_DONE );
-
-    return nCanais;
-}
-
-int SQLITE_verifyAccountDB(PLAYER_STRUCT* A) {
-    int rc;
-    char *sql = "SELECT * FROM contas";
+    char *sql = "SELECT * FROM chars";
 
     rc = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
 
@@ -83,19 +53,15 @@ int SQLITE_verifyAccountDB(PLAYER_STRUCT* A) {
        rc = sqlite3_step(stmt);
 
        if ( rc == SQLITE_ROW ) {
-            if ( strcmp(sqlite3_column_text(stmt, 2), A->name) == 0 ) {
-                if(strcmp(sqlite3_column_text(stmt, 3), A->senha) == 0) {
-                    /* Conta Online ? */
-                    if(sqlite3_column_int(stmt, 4) == 1)
-                        return 2;
+            if(A->AccountID == sqlite3_column_int(stmt, 0) && A->AccountUID == sqlite3_column_int(stmt, 1)) {
 
-                    /* Carrega conta */
-                    A->ID = sqlite3_column_int(stmt, 0);
-                    A->uID = sqlite3_column_int(stmt, 1);
-                    return 1;
-                } else {
-                    return 0;
-                }
+                strcpy(A->nChar[0].nome, sqlite3_column_text(stmt, 2));
+                A->nChar[0].level = sqlite3_column_int(stmt, 3);
+                A->nChar[0].modelo = sqlite3_column_int(stmt, 4);
+                strcpy(A->nChar[0].Digimon.nome, sqlite3_column_text(stmt, 5));
+                A->nChar[0].Digimon.level = sqlite3_column_int(stmt, 6);
+                A->nChar[0].Digimon.ID = sqlite3_column_int(stmt, 7);
+                return 0;
             }
        }
 

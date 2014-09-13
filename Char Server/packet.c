@@ -80,20 +80,44 @@ void sendConfirm() {
     #endif // DEBUG
 }
 
-void sendChar() {
+void sendChar(int nIndex, u8* packet) {
+    int i = 0;
+    /* Pegar AccountID e AccountUID */
+
+    memcpy(&nPlayer[nIndex].AccountID, packet + 8, 4);
+    memcpy(&nPlayer[nIndex].AccountUID, packet + 12, 4);
+
+    SQLITE_getPlayer(&nPlayer[nIndex]);
+
     clearPacket();
-    writeHeader(0x0515);
-    writeSize(0x025C);
-    writeInt(0x81006900);
-    writeInt(0x01000138);
-    writeString("CharTest", strlen("CharTest"));
-    addCount(560);
-    writeInt(0x00007919);
-    writeByte(0xFF);
-    writeString("DigiTest", strlen("DigiTest"));
+    writeHeader(SEND_CHAR_PACKET);
+    /* ???? */
+    writeShort(0x6900);
+    /* ID do Mapa que o personagem se encontra */
+    writeShort(0x8100);
+    /* ID Do Modelo do Personage */
+    writeShort((unsigned short)nPlayer[nIndex].nChar[0].modelo);
+    /* ?????? */
+    writeByte(0x0);
+    /* Player Level */
+    writeByte(nPlayer[nIndex].nChar[0].level);
+    writeString(nPlayer[nIndex].nChar[0].nome, strlen(nPlayer[nIndex].nChar[0].nome));
+
+    /* Itens do Personagem, ainda precisa ser implementado */
+    for(i = 0; i < 140; i++) {
+        writeInt(0x0);
+    }
+
+    /* ID do Digimon */
+    writeInt(nPlayer[nIndex].nChar[0].Digimon.ID);
+    /* Level do Digimon */
+    writeByte(nPlayer[nIndex].nChar[0].Digimon.level);
+    writeString(nPlayer[nIndex].nChar[0].Digimon.nome, strlen(nPlayer[nIndex].nChar[0].Digimon.nome));
     writeShort(0x2710);
     writeByte(0x00);
-    writeInt(0x18606300);
+    writeShort(0x6300);
+    writeShort(getCount() + 2 ^ checkSum);
+    writeSize(getCount());
 }
 
 
@@ -114,8 +138,8 @@ void handlePacket(int nIndex, u8 *packet) {
 		break;
 
 		case(RECV_CHAR_PACKET):
-		    printf("Enviando Personagem de Teste !\n");
-            sendChar();
+            printf("Pedido de Personage...\n");
+            sendChar(nIndex, packet);
         break;
 
 		default:

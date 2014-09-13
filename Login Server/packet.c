@@ -104,29 +104,31 @@ void sendChannels(int nIndex) {
     for(i = 0; i < t_channel; i++) {
         writeInt(nChannel[i].ID);
         writeString(nChannel[i].name, strlen(nChannel[i].name));
-        writeShort(0x0);
-
-        if(nChannel[i].players > 10)
-            writeByte(0x1);
-        else if(nChannel[i].players > 50)
-            writeByte(0x2);
-        else if(nChannel[i].players > 90)
-            writeByte(0x3);
-        else
-            writeByte(0x0);
+        writeByte(nChannel[i].manu);
+        /* Quantidade de Players no Servidor */
+        writeByte(0x5); // 04 = Medio, 05 = full
+        /* Quantidade de Personagens que você tem no servidor */
+        writeByte(0x0);
     }
 
-    writeString(nAccount[0].name, strlen(nAccount[0].name));
+    writeString(nAccount[nIndex].name, strlen(nAccount[nIndex].name));
     writeShort(getCount() + 2 ^ checkSum);
     writeSize(getCount());
 
 }
 
-void sendSelectedChannel() {
+void sendSelectedChannel(int nIndex, u8* Packet) {
+    int ChannelID = 0;
+    /* Qual o channel selecionado ? */
+    memcpy(&ChannelID, Packet + 4, 4);
+
+    //if(nChannel[ChannelID].players >= nChannel[ChannelID].max_players)
+    //    sendMensagem("Servidor Lotado !", strlen("Servidor Lotado !"));
+
     writeHeader(SEND_INFO_PACKET);
     writeSize(0x1D);
-    writeInt(nAccount[0].ID);
-    writeInt(nAccount[0].uID);
+    writeInt(nAccount[nIndex].ID);
+    writeInt(nAccount[nIndex].uID);
     writeString("127.0.0.1", strlen("127.0.0.1"));
     writeShort(0x1B57);
     writeShort(0x0000);
@@ -198,7 +200,7 @@ void handlePacket(int nIndex, u8 *packet) {
         break;
 
         case(RECV_SCHANNEL_PACKET):
-            sendSelectedChannel();
+            sendSelectedChannel(nIndex, packet);
         break;
 
 		default:

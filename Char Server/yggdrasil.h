@@ -10,7 +10,7 @@
 #define YGGDRASIL_H
 
 #define MAX_PLAYERS 100
-#define MAX_CHANNEL 3
+#define MAX_CHAR 3
 #define BUFFER_SIZE 2048
 #define checkSum 6716
 #define DEBUG 1
@@ -20,24 +20,29 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
+
+typedef struct DIGI_STRUCT {
+    u8 nome[20];
+    u8 level;
+    u32 ID;
+
+} DIGI_STRUCT;
+
+typedef struct CHAR_STRUCT {
+    u8 nome[20];
+    u8 level;
+    u32 modelo;
+
+    DIGI_STRUCT Digimon;
+} CHAR_STRUCT;
+
 typedef struct PLAYER_STRUCT {
-  u8 name[20];
-  u32 nLen;
-  u8 senha[20];
-  u32 sLen;
-  u32 ID;
-  u32 uID;
+    u32 AccountID;
+    u32 AccountUID;
+    CHAR_STRUCT nChar[MAX_CHAR];
 } PLAYER_STRUCT;
 
-typedef struct CHANNEL_STRUCT {
-    u32 ID;
-    u8 name[20];
-    u32 players;
-    u8 ip[20];
-    u32 porta;
-} CHANNEL_STRUCT;
+PLAYER_STRUCT nPlayer[MAX_PLAYERS];
 
-CHANNEL_STRUCT nChannel[MAX_CHANNEL];
-PLAYER_STRUCT nAccount[MAX_PLAYERS];
 
 #endif
